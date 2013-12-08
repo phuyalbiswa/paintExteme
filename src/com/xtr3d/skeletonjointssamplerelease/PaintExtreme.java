@@ -1,16 +1,17 @@
 package com.xtr3d.skeletonjointssamplerelease;
 
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 import android.app.Activity;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.xtr3d.extrememotion.api.Joint;
 import com.xtr3d.extrememotion.api.Skeleton.StateType;
@@ -19,12 +20,20 @@ import com.xtr3d.skeletonjointssamplerelease.ExtremeMotionUtils.NewFrameReadyLis
 public class PaintExtreme extends Activity {
 
 	private View mPreviewView;
+
 	public enum ViewHandler {
 		INSTANCE;
 		public static CameraView mCameraView;
 		public static HandsView mHandsView;
 		public static CanvasView mCanvasView;
 	};
+	
+	public static MenuHandler mMenuHandler;
+	
+	public static ImageView menuImageTop;
+	public static ImageView menuImageLeft;
+	public static ImageView menuImageRight;
+	public static ImageView menuImageBottom;
 
 	private RelativeLayout mCameraLayout;
 
@@ -32,8 +41,10 @@ public class PaintExtreme extends Activity {
 
 	private StateType mLastSkeletonState = StateType.INITIALIZING;
 	
-	// Test
-	public static TextView mDebugText;
+	Queue<Float> handLeftOldX = new LinkedList<Float>();
+	Queue<Float> handLeftOldY = new LinkedList<Float>();
+	Queue<Float> handRightOldX = new LinkedList<Float>();
+	Queue<Float> handRightOldY = new LinkedList<Float>();
 
 	@Override
 	protected void onResume() {
@@ -44,8 +55,13 @@ public class PaintExtreme extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+
 		setContentView(R.layout.main);
+		
+		menuImageTop = (ImageView) findViewById(R.id.top);
+		menuImageLeft = (ImageView) findViewById(R.id.left);
+		menuImageRight = (ImageView) findViewById(R.id.right);
+		menuImageBottom = (ImageView) findViewById(R.id.bottom);
 
 		mCameraLayout = (RelativeLayout) findViewById(R.id.cameraLayout);
 
@@ -56,18 +72,23 @@ public class PaintExtreme extends Activity {
 
 		mPreviewView = emUtils.onCreate(this, new SkeletonListenerImpl());
 		mCameraLayout.addView(mPreviewView);
-		
+
 		ViewHandler.mCameraView = new CameraView(this);
 		ViewHandler.mCameraView.emUtils = emUtils;
-		mCameraLayout.addView(ViewHandler.mCameraView, android.widget.RelativeLayout.LayoutParams.MATCH_PARENT);
-		
+		mCameraLayout.addView(ViewHandler.mCameraView,
+				android.widget.RelativeLayout.LayoutParams.MATCH_PARENT);
+
 		ViewHandler.mHandsView = new HandsView(this);
 		ViewHandler.mHandsView.emUtils = emUtils;
-		mCameraLayout.addView(ViewHandler.mHandsView, android.widget.RelativeLayout.LayoutParams.MATCH_PARENT);
-		
+		mCameraLayout.addView(ViewHandler.mHandsView,
+				android.widget.RelativeLayout.LayoutParams.MATCH_PARENT);
+
 		ViewHandler.mCanvasView = new CanvasView(this);
 		ViewHandler.mCanvasView.emUtils = emUtils;
-		mCameraLayout.addView(ViewHandler.mCanvasView, android.widget.RelativeLayout.LayoutParams.MATCH_PARENT);
+		mCameraLayout.addView(ViewHandler.mCanvasView,
+				android.widget.RelativeLayout.LayoutParams.MATCH_PARENT);
+		
+		mMenuHandler = new MenuHandler();
 	}
 
 	@Override
@@ -83,98 +104,118 @@ public class PaintExtreme extends Activity {
 	}
 
 	private class SkeletonListenerImpl implements NewFrameReadyListener {
-		
-		private float newX = 10000000;
-		private float newY = 10000000;
-		
+
 		private final long ENGINE_RESET_TIME_OUT = 4000;
-        private Handler mHandler = new Handler();
-        private Runnable mResetEngineTaskOnUserExit = new Runnable() {
-                @Override
-                public void run() {
-                        emUtils.reset();
-                }
-        };
+		private Handler mHandler = new Handler();
+		private Runnable mResetEngineTaskOnUserExit = new Runnable() {
+			@Override
+			public void run() {
+				emUtils.reset();
+			}
+		};
 
-        @Override
-        public void onNewFrameReady(final FrameInfo newFrameInfo) {
+		@Override
+		public void onNewFrameReady(final FrameInfo newFrameInfo) {
 
-                runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                                updateAppViews(newFrameInfo);
-                        }
-                });
+			runOnUiThread(new Runnable() {
+				@Override
+				public void run() {
+					updateAppViews(newFrameInfo);
+				}
+			});
 
-                ViewHandler.mCameraView.postInvalidate();
-                ViewHandler.mHandsView.postInvalidate();
-                ViewHandler.mCanvasView.postInvalidate();
-        }
+			ViewHandler.mCameraView.postInvalidate();
+			ViewHandler.mHandsView.postInvalidate();
+			ViewHandler.mCanvasView.postInvalidate();
+		}
 
-        private void updateAppViews(FrameInfo newFrameInfo) {
+		private void updateAppViews(FrameInfo newFrameInfo) {
 
-                final StateType state = newFrameInfo.getSkeleton().getState();
-                
-                if (state == StateType.TRACKED) {
-        			//mResetButton2.setVisibility(View.VISIBLE);
-        			
-        			FrameInfo frameInfo = emUtils.getLatestFrameInfo();
-        			if (frameInfo == null)
-        				return;
-        			List<Joint> joints = frameInfo.getSkeleton().getJoints();
-        			if (null != joints && !joints.isEmpty()) {
-        				enableJestureChecker(joints);
-        			}
-                }
+			final StateType state = newFrameInfo.getSkeleton().getState();
 
-                // the skeleton was lost, if the user will not come back fast
-                // enough(ENGINE_RESET_TIME_OUT seconds), we will call engine reset.
-                if (mLastSkeletonState == StateType.TRACKED
-                                && state == StateType.NOT_TRACKED) {
-                        mHandler.postDelayed(mResetEngineTaskOnUserExit,
-                                        ENGINE_RESET_TIME_OUT);
-                } else if (mLastSkeletonState == StateType.NOT_TRACKED
-                                && state == StateType.TRACKED) {
-                        mHandler.removeCallbacks(mResetEngineTaskOnUserExit);
-                }
+			if (state == StateType.TRACKED) {
+				// mResetButton2.setVisibility(View.VISIBLE);
 
-                mLastSkeletonState = state;
-        }
-		
+				FrameInfo frameInfo = emUtils.getLatestFrameInfo();
+				if (frameInfo == null)
+					return;
+				List<Joint> joints = frameInfo.getSkeleton().getJoints();
+				if (null != joints && !joints.isEmpty()) {
+					enableJestureChecker(joints);
+				}
+			}
+
+			// the skeleton was lost, if the user will not come back fast
+			// enough(ENGINE_RESET_TIME_OUT seconds), we will call engine reset.
+			if (mLastSkeletonState == StateType.TRACKED
+					&& state == StateType.NOT_TRACKED) {
+				mHandler.postDelayed(mResetEngineTaskOnUserExit,
+						ENGINE_RESET_TIME_OUT);
+			} else if (mLastSkeletonState == StateType.NOT_TRACKED
+					&& state == StateType.TRACKED) {
+				mHandler.removeCallbacks(mResetEngineTaskOnUserExit);
+			}
+
+			mLastSkeletonState = state;
+		}
+
 		public void enableJestureChecker(List<Joint> mJoints) {
-			
-			float newPaintingHandX = 0;
-			float newPaintingHandY = 0;
-			
-			for (Joint joint : mJoints) 
-			{
-				float x = (joint.getPoint().getImgCoordNormHorizontal() * (float)640);
-				float y = (joint.getPoint().getImgCoordNormVertical() * (float)480);
-				float xx = (joint.getPoint().getX());
-				float yy = (joint.getPoint().getY());
+			float handLeftX = 0;
+			float handLeftY = 0;
+			float handRightX = 0;
+			float handRightY = 0;
+
+			for (Joint joint : mJoints) {
+				float x = (joint.getPoint().getImgCoordNormHorizontal() * (float) 640);
+				float y = (joint.getPoint().getImgCoordNormVertical() * (float) 480);
 				
-				int r = 0, g = 0, b = 0;					
-				// select a high-contrast color scheme for the currently available joints
 				switch (joint.getJointType()) {
-				case ShoulderLeft:
-					newPaintingHandX = xx;
-					newPaintingHandY = yy;
-					break;			
+				case HandLeft:
+					handLeftX = x;
+					handLeftY = y;
+					break;
+				case HandRight:
+					handRightX = x;
+					handRightY = y;
+					break;
 				default:
 					break;
 				}
-				
-				Log.e("TAG", "X: "+newPaintingHandX +" y: "+newPaintingHandY //+ "newHipCenterX: "+newHipCenterX + " newHipCenterX: " +newHipCenterX
-						);
-				
-				if(newPaintingHandX < 0.01 && newPaintingHandY < 0.01){
-					Log.e("TAG", "x,y");
-				}
-				if (newX-x > 5 && newY-y > 5 && newY-y < 10000 ) {
-					Log.e("TAG", "inside");
-				}
-				newX = x;
-				newY = y;
+			}
+			
+			handLeftOldX.add(handLeftX);
+			handLeftOldY.add(handLeftY);
+			handRightOldX.add(handRightX);
+			handRightOldY.add(handRightY);
+			
+			if(handLeftOldX.size() > 5){handLeftOldX.poll();};
+			if(handLeftOldY.size() > 5){handLeftOldY.poll();};
+			if(handRightOldX.size() > 5){handRightOldX.poll();};
+			if(handRightOldY.size() > 5){handRightOldY.poll();};
+			
+			// Get average motion of hands
+			float avgLeftX = 0, avgLeftY = 0, avgRightX = 0, avgRightY = 0;
+			for (float leftX : handLeftOldX) {
+				avgLeftX += leftX;
+			}
+			for (float leftY : handLeftOldY) {
+				avgLeftY += leftY;
+			}
+			for (float rightX : handRightOldX) {
+				avgRightX += rightX;
+			}
+			for (float rightY : handRightOldY) {
+				avgRightY += rightY;
+			}
+			avgLeftX /= 5;
+			avgLeftY /= 5;
+			avgRightX /= 5;
+			avgRightY /= 5;
+			
+			// Check standard error
+			if(avgLeftX <= 20 && avgLeftY <= 20 && avgRightX <= 20 && avgRightY <= 20)
+			{
+				mMenuHandler.processActions(handLeftX, handLeftY, handRightX, handRightY);
 			}
 		}
 	}
