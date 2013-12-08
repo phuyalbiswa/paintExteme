@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
@@ -228,6 +229,7 @@ public class PaintExtreme extends Activity {
 			for (float rightY : handRightOldY) {
 				varRightY += Math.abs(avgRightY - rightY);
 			}
+			Log.e("TAG", "---------- varRightY: " + varRightY + " varRightX:"+varRightX + " varLeftY:"+varLeftY+" varLeftX:"+ varLeftX);
 			
 			// Check standard error
 			//if(varLeftX <= 1000 && varLeftY <= 1000 && varRightX <= 1000 && varRightY <= 1000)
