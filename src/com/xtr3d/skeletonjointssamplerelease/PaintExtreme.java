@@ -192,7 +192,7 @@ public class PaintExtreme extends Activity {
 			handRightOldX.add(handRightX);
 			handRightOldY.add(handRightY);
 			
-			final float SAMPLES = 20;
+			final float SAMPLES = 5;
 			
 			if(handLeftOldX.size() > SAMPLES){handLeftOldX.poll();};
 			if(handLeftOldY.size() > SAMPLES){handLeftOldY.poll();};
@@ -235,7 +235,7 @@ public class PaintExtreme extends Activity {
 			Log.e("TAG", "---------- varRightY: " + varRightY + " varRightX:"+varRightX + " varLeftY:"+varLeftY+" varLeftX:"+ varLeftX);
 			
 			// Check standard error
-			//if(varLeftX <= 1000 && varLeftY <= 1000 && varRightX <= 1000 && varRightY <= 1000)
+			//if(varLeftX <= 200 && varLeftY <= 200 && varRightX <= 200 && varRightY <= 200)
 			{
 				mMenuHandler.processActions(handLeftX, handLeftY, handRightX, handRightY);
 			}

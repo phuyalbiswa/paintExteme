@@ -24,9 +24,13 @@ public class MenuHandler {
 	
 	Menus currentMenu;
 	
+	private int t;
+	
 	public MenuHandler()
 	{
-		currentMenu = Menus.NONE;
+		
+		t=0;
+		currentMenu = Menus.MAIN;
 		
 		menuTop = R.id.top;
 		menuLeft = R.id.left;
@@ -36,6 +40,8 @@ public class MenuHandler {
 	
 	public void processActions(float handLeftX, float handLeftY, float handRightX, float handRightY)
 	{
+		t++;
+		if(t < 20) return;
 		// Do actions
 		switch(currentMenu)
 		{
@@ -43,28 +49,30 @@ public class MenuHandler {
 			if(handLeftX <= 32 && handLeftY <= 32)
 			{
 				changeMenu(Menus.MAIN);
+				t=0;
 			}
 			break;
 		case MAIN:
 			if(handRightY <= 50) //top
 			{
-				changeMenu(Menus.DOCUMENT);
+				t=0;
+				changeMenu(Menus.COLOR);
 			}
 			else if(handRightX <= 50) //left
 			{
-				changeMenu(Menus.COLOR);
+				t=0;
+				// SAVE
+				PaintExtreme.ViewHandler.mCanvasView.saveImage();
+				changeMenu(Menus.MAIN);
 			}
 			else if(handRightX >= 640 - 50)
 			{
-				changeMenu(Menus.BRUSHES);
-			}
-			else if(handRightY >= 480 - 50)
-			{
-				changeMenu(Menus.OPTIONS);
+				t=0;
+				changeMenu(Menus.MAIN);
 			}
 			break;
 		case DOCUMENT:
-			if(handRightY <= 50) //top
+			if(handRightY <= 100) //top
 			{
 				// TODO Save
 				PaintExtreme.ViewHandler.mCanvasView.saveImage();
@@ -87,19 +95,26 @@ public class MenuHandler {
 		case COLOR:
 			if(handRightY <= 50) //top
 			{
-				SkeletonDrawer.brushColor = Color.RED;
+				t=0;
+				SkeletonDrawer.brushColor = Color.BLUE;
+				changeMenu(Menus.MAIN);
 			}
 			else if(handRightX <= 50) //left
 			{
+				t=0;
 				SkeletonDrawer.brushColor = Color.GREEN;
+				changeMenu(Menus.MAIN);
 			}
 			else if(handRightX >= 640 - 50)
 			{
-				SkeletonDrawer.brushColor = Color.BLUE;
+				t=0;
+				SkeletonDrawer.brushColor = Color.RED;
+				changeMenu(Menus.MAIN);
 			}
 			else if(handRightY >= 480 - 50)
 			{
-				SkeletonDrawer.brushColor = Color.YELLOW;
+				t=0;
+				changeMenu(Menus.MAIN);
 			}
 			break;
 		case BRUSHES:
@@ -125,16 +140,22 @@ public class MenuHandler {
 		switch(menu)
 		{
 		case NONE:
-			images.add(R.drawable.document);
 			images.add(R.drawable.color);
-			images.add(R.drawable.brushes);
-			images.add(R.drawable.menu);
+			images.add(R.drawable.save);
+			images.add(R.drawable.back);
+			images.add(R.drawable.ic_launcher);
 			break;
 		case MAIN:
+			/*
 			images.add(R.drawable.document);
 			images.add(R.drawable.color);
 			images.add(R.drawable.brushes);
 			images.add(R.drawable.menu);
+			*/
+			images.add(R.drawable.color);
+			images.add(R.drawable.save);
+			images.add(R.drawable.back);
+			images.add(R.drawable.ic_launcher);
 			break;
 		case DOCUMENT:
 			images.add(R.drawable.save);
