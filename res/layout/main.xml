@@ -25,6 +25,7 @@
         android:layout_marginTop="10dp"
         android:layout_centerHorizontal="true"
         android:src="@drawable/color"
+        android:visibility="invisible"
         />
     
     <ImageView
@@ -35,6 +36,7 @@
         android:layout_toRightOf="@+id/menu"
         android:layout_below="@+id/menu"
         android:src="@drawable/brushes"
+        android:visibility="invisible"
         />
     
     <ImageView
