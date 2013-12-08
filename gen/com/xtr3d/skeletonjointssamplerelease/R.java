@@ -24,17 +24,12 @@ public final class R {
         public static final int save=0x7f02000a;
     }
     public static final class id {
-        public static final int FPSText=0x7f050006;
-        public static final int brushes=0x7f050009;
-        public static final int calibIcon=0x7f050003;
-        public static final int cameraLayout=0x7f050005;
-        public static final int file_option_save=0x7f05000a;
-        public static final int menu=0x7f050002;
+        public static final int brushes=0x7f050004;
+        public static final int cameraLayout=0x7f050001;
+        public static final int file_option_save=0x7f050005;
+        public static final int menu=0x7f050003;
         public static final int relativeLayout=0x7f050000;
-        public static final int resetButton=0x7f050001;
-        public static final int select_colors=0x7f050007;
-        public static final int trackingText=0x7f050004;
-        public static final int warningsView=0x7f050008;
+        public static final int select_colors=0x7f050002;
     }
     public static final class layout {
         public static final int main=0x7f030000;

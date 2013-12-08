@@ -3,9 +3,18 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
+
 import android.util.Log;
+
+import com.xtr3d.extrememotion.api.BaseFrame;
+import com.xtr3d.extrememotion.api.ExtremeMotionGenerator;
+import com.xtr3d.extrememotion.api.RawImageFrame;
+import com.xtr3d.extrememotion.api.Skeleton;
+import com.xtr3d.extrememotion.api.SkeletonFrame;
+import com.xtr3d.extrememotion.api.StreamType;
+import com.xtr3d.extrememotion.api.WarningType;
+import com.xtr3d.extrememotion.api.WarningsFrame;
 import com.xtr3d.skeletonjointssamplerelease.ExtremeMotionUtils.NewFrameReadyListener;
-import com.xtr3d.extrememotion.api.*;
 
 /**
  * The ExtremeMotionGenerator provides API for blocking-wait untill an input arrives.
