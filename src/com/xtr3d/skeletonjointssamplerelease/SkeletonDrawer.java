@@ -65,6 +65,6 @@ public class SkeletonDrawer {
 		// Test
 		//PaintExtreme.mDebugText.setText(Float.toString(handLeftZ));
 		//PaintExtreme.ViewHandler.mCanvasView.drawCircle(handLeftX, handLeftY, 25, );
-		PaintExtreme.ViewHandler.mCanvasView.drawCircle(handRightX, handRightY, 25, brushColor);
+		PaintExtreme.ViewHandler.mCanvasView.drawCircle(handRightX * 2, handRightY * 2, 25, brushColor);
 	}
 }

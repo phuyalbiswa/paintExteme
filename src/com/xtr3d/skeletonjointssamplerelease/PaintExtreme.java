@@ -10,8 +10,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 
 import com.xtr3d.extrememotion.api.Joint;
 import com.xtr3d.extrememotion.api.Skeleton.StateType;
@@ -35,7 +35,7 @@ public class PaintExtreme extends Activity {
 	public static ImageView menuImageRight;
 	public static ImageView menuImageBottom;
 
-	private RelativeLayout mCameraLayout;
+	private FrameLayout mCameraLayout;
 
 	private final ExtremeMotionUtils emUtils = new ExtremeMotionUtils();
 
@@ -63,7 +63,7 @@ public class PaintExtreme extends Activity {
 		menuImageRight = (ImageView) findViewById(R.id.right);
 		menuImageBottom = (ImageView) findViewById(R.id.bottom);
 
-		mCameraLayout = (RelativeLayout) findViewById(R.id.cameraLayout);
+		mCameraLayout = (FrameLayout) findViewById(R.id.cameraLayout);
 
 		// Hog the entire screen and keep it on. Force landscape orientation.
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
@@ -230,7 +230,7 @@ public class PaintExtreme extends Activity {
 			}
 			
 			// Check standard error
-			if(varLeftX <= 1000 && varLeftY <= 1000 && varRightX <= 1000 && varRightY <= 1000)
+			//if(varLeftX <= 1000 && varLeftY <= 1000 && varRightX <= 1000 && varRightY <= 1000)
 			{
 				mMenuHandler.processActions(handLeftX, handLeftY, handRightX, handRightY);
 			}
