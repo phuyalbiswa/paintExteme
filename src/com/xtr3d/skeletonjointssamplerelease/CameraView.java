@@ -17,7 +17,7 @@ public class CameraView extends View {
 	private final int HEIGHT = 480;
 	private Mat matRgb;
 	private Bitmap mRgb = Bitmap.createBitmap(WIDTH, HEIGHT,
-			Bitmap.Config.RGB_565);
+			Bitmap.Config.ARGB_8888);
 
 	public CameraView(Context context) {
 		super(context);

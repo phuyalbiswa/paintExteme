@@ -30,8 +30,7 @@ public class ImageHandler {
 		   int b = mImageData[3*i + 2] & 0xFF;
 		   pixels[i] = Color.rgb(r,g,b);
 		}
-		Bitmap bitmap = Bitmap.createBitmap(pixels, 640, 480, Bitmap.Config.RGB_565);
-
+		Bitmap bitmap = Bitmap.createBitmap(pixels, 640, 480, Bitmap.Config.ARGB_8888);
 		
 		ByteArrayOutputStream bytes = new ByteArrayOutputStream();
 		bitmap.compress(Bitmap.CompressFormat.JPEG, 40, bytes);
