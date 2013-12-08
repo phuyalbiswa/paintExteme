@@ -14,8 +14,12 @@ import com.xtr3d.skeletonjointssamplerelease.ExtremeMotionUtils.NewFrameReadyLis
 public class PaintExtreme extends Activity {
 
 	private View mPreviewView;
-	private CameraView mCameraView;
-	private HandsView mHandsView;
+	public enum ViewHandler {
+		INSTANCE;
+		public static CameraView mCameraView;
+		public static HandsView mHandsView;
+		public static CanvasView mCanvasView;
+	};
 
 	private RelativeLayout mCameraLayout;
 
@@ -44,14 +48,17 @@ public class PaintExtreme extends Activity {
 		mPreviewView = emUtils.onCreate(this, new SkeletonListenerImpl());
 		mCameraLayout.addView(mPreviewView);
 		
-		mCameraView = new CameraView(this);
-		mCameraView.emUtils = emUtils;
-		mCameraLayout.addView(mCameraView, android.widget.RelativeLayout.LayoutParams.MATCH_PARENT);
+		ViewHandler.mCameraView = new CameraView(this);
+		ViewHandler.mCameraView.emUtils = emUtils;
+		mCameraLayout.addView(ViewHandler.mCameraView, android.widget.RelativeLayout.LayoutParams.MATCH_PARENT);
 		
-		mHandsView = new HandsView(this);
-		mHandsView.emUtils = emUtils;
-		mCameraLayout.addView(mHandsView, android.widget.RelativeLayout.LayoutParams.MATCH_PARENT);
+		ViewHandler.mHandsView = new HandsView(this);
+		ViewHandler.mHandsView.emUtils = emUtils;
+		mCameraLayout.addView(ViewHandler.mHandsView, android.widget.RelativeLayout.LayoutParams.MATCH_PARENT);
 		
+		ViewHandler.mCanvasView = new CanvasView(this);
+		ViewHandler.mCanvasView.emUtils = emUtils;
+		mCameraLayout.addView(ViewHandler.mCanvasView, android.widget.RelativeLayout.LayoutParams.MATCH_PARENT);
 	}
 
 	@Override
@@ -87,8 +94,9 @@ public class PaintExtreme extends Activity {
 				}
 			});
 
-			mCameraView.postInvalidate();
-			mHandsView.postInvalidate();
+			ViewHandler.mCameraView.postInvalidate();
+			ViewHandler.mHandsView.postInvalidate();
+			ViewHandler.mCanvasView.postInvalidate();
 		}
 
 		private void updateAppViews(FrameInfo newFrameInfo) {

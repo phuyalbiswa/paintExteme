@@ -3,6 +3,7 @@ package com.xtr3d.skeletonjointssamplerelease;
 import java.util.List;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 
 import com.xtr3d.extrememotion.api.Joint;
@@ -48,5 +49,9 @@ public class SkeletonDrawer {
 		mPaint.setARGB(255, 118, 42, 131);
 		canvas.drawCircle(handLeftX, handLeftY, 15, mPaint);
 		canvas.drawCircle(handRightX, handRightY, 15, mPaint);
+		
+		// Test
+		PaintExtreme.ViewHandler.mCanvasView.drawCircle(handLeftX, handLeftY, 25, Color.BLUE);
+		PaintExtreme.ViewHandler.mCanvasView.drawCircle(handRightX, handRightY, 25, Color.RED);
 	}
 }
