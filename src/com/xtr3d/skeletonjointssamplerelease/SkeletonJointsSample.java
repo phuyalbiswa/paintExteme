@@ -273,12 +273,14 @@ public class SkeletonJointsSample extends Activity {
 				}
 			}
 
+			/*
 			if (frameInfo.getSkeleton() == null)
 				return;
 			List<Joint> joints = frameInfo.getSkeleton().getJoints();
 			if (null != joints && !joints.isEmpty()) {
 				mSkeletonDrawer.drawSkeleton(canvas, joints);
 			}
+			*/
 		}
 
 	}
