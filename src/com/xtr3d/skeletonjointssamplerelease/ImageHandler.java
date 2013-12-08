@@ -25,9 +25,9 @@ public class ImageHandler {
 		int nrOfPixels = mImageData.length / 3; // Three bytes per pixel.
 		int pixels[] = new int[nrOfPixels];
 		for(int i = 0; i < nrOfPixels; i++) {
-		   int r = mImageData[3*i];
-		   int g = mImageData[3*i + 1];
-		   int b = mImageData[3*i + 2];
+		   int r = mImageData[3*i] & 0xFF;
+		   int g = mImageData[3*i + 1] & 0xFF;
+		   int b = mImageData[3*i + 2] * 0xFF;
 		   pixels[i] = Color.rgb(r,g,b);
 		}
 		Bitmap bitmap = Bitmap.createBitmap(pixels, 640, 480, Bitmap.Config.RGB_565);
