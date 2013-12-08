@@ -4,8 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="fill_parent"
     android:gravity="top"
+    android:background="#008000"
     android:orientation="horizontal" >
-
+    
     <RelativeLayout
         android:id="@+id/cameraLayout"
         android:layout_width="640px"
@@ -14,14 +15,36 @@
         android:layout_centerInParent="true"
         android:layout_centerVertical="true" >
     </RelativeLayout>
-
-    <TextView
-        android:id="@+id/debugText"
+    
+    <ImageView
+        android:id="@+id/select_colors"
         android:layout_width="wrap_content"
+        android:layout_height="70dp"
+        android:layout_toLeftOf="@+id/menu"
+        android:layout_below="@+id/menu"
+        android:layout_marginTop="10dp"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/color"
+        />
+    
+    <ImageView
+        android:id="@+id/brushes"
+        android:layout_width="70dp"
+        
         android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/menu"
+        android:layout_below="@+id/menu"
+        android:src="@drawable/brushes"
+        />
+    
+    <ImageView
+        android:id="@+id/file_option_save"
+        android:layout_width="100dp"
+        android:layout_height="70dp"
+        android:src="@drawable/save"
+        android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:text="0.0"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:layout_marginBottom="10dp"
+        />
 
 </RelativeLayout>

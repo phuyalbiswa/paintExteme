@@ -13,6 +13,15 @@ public class SkeletonDrawer {
 	private int mHeight;
 	private int mWidth;
 	private Paint mPaint;
+	
+	//0-3: left hand to left elbow
+	//4-7: left elbow to left shoulder
+	//8-11: right hand to right elbow
+	//12-15: right elbow to right shoulder
+	//16-19: left shoulder to center
+	//20-23: right shoulder to center
+	//24-27: head to shoulder center
+	//28-31: shoulder center to hip center
 
 	public SkeletonDrawer(int height, int width){
 		mHeight = height;
@@ -33,24 +42,22 @@ public class SkeletonDrawer {
 		{
 			float x = (joint.getPoint().getImgCoordNormHorizontal() * (float)mWidth);
 			float y = (joint.getPoint().getImgCoordNormVertical() * (float)mHeight);
-			float z = (joint.getPoint().getZ());
 			
 			// select a high-contrast color scheme for the currently available joints
 			switch (joint.getJointType()) {
 			case HandLeft:
 				handLeftX = x;
 				handLeftY = y;
-				handLeftZ = z;
 				break;
 			case HandRight:
 				handRightX = x;
 				handRightY = y;
-				handRightZ = z;
 				break;
 			default:
 				break;
 			}
 		}
+
 		mPaint.setARGB(255, 118, 42, 131);
 		canvas.drawCircle(handLeftX, handLeftY, 15, mPaint);
 		canvas.drawCircle(handRightX, handRightY, 15, mPaint);
