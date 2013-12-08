@@ -7,7 +7,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 
 import com.xtr3d.extrememotion.api.Joint;
-import com.xtr3d.skeletonjointssamplerelease.PaintExtreme.ViewHandler;
 
 public class SkeletonDrawer {
 	
