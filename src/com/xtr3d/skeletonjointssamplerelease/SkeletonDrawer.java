@@ -22,6 +22,8 @@ public class SkeletonDrawer {
 	//20-23: right shoulder to center
 	//24-27: head to shoulder center
 	//28-31: shoulder center to hip center
+	
+	public static int brushColor = Color.RED;
 
 	public SkeletonDrawer(int height, int width){
 		mHeight = height;
@@ -62,7 +64,7 @@ public class SkeletonDrawer {
 		
 		// Test
 		//PaintExtreme.mDebugText.setText(Float.toString(handLeftZ));
-		PaintExtreme.ViewHandler.mCanvasView.drawCircle(handLeftX, handLeftY, 25, Color.argb(255, 255, 255, 0));
-		PaintExtreme.ViewHandler.mCanvasView.drawCircle(handRightX, handRightY, 25, Color.argb(255, 255, 0, 0));
+		//PaintExtreme.ViewHandler.mCanvasView.drawCircle(handLeftX, handLeftY, 25, );
+		PaintExtreme.ViewHandler.mCanvasView.drawCircle(handRightX, handRightY, 25, brushColor);
 	}
 }
