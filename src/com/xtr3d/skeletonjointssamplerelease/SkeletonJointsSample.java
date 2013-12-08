@@ -61,6 +61,10 @@ public class SkeletonJointsSample extends Activity {
 	/** Used to contain the reset button */
 	private Button mResetButton;
 	private ImageView mDocumentMenu;
+	private ImageView brushes;
+	private ImageView fileOption;
+	private ImageView selectColors;
+
 
 	/** Used to contain the above UI elements */
 
@@ -104,6 +108,11 @@ public class SkeletonJointsSample extends Activity {
 		setContentView(R.layout.main);
 		mResetButton = (Button) findViewById(R.id.resetButton);
 		mDocumentMenu = (ImageView) findViewById(R.id.menu);
+		brushes = (ImageView) findViewById(R.id.brushes);
+		fileOption = (ImageView) findViewById(R.id.file_option);
+		selectColors = (ImageView) findViewById(R.id.select_colors);
+
+		
 		mCalibIcon = (ImageView) findViewById(R.id.calibIcon);
 		mFPSTextView = (TextView) findViewById(R.id.FPSText);
 		mTrackingStatusTextView = (TextView) findViewById(R.id.trackingText);
@@ -341,14 +350,37 @@ public class SkeletonJointsSample extends Activity {
 				float newPaintingHandY = mPoints[133];
 				Log.e("TAG", "X: "+newPaintingHandX +" y: "+newPaintingHandY //+ "newHipCenterX: "+newHipCenterX + " newHipCenterX: " +newHipCenterX
 						);
+				int i = 0;
+				i++;
+				if (i > 100) {
+					i--;
+
+					if (newPaintingHandY > 0.01) {
+						// Top icon
+						// Need to check for x co-ordinate, -ve or +ve for more
+						// accuracy
+						getSubMenuDrawables();
+
+					} else if (newPaintingHandY < -0.5) {
+						// Bottom icon
+					} else if (newPaintingHandX > 0.5) {
+						// Right icon
+					} else if (newPaintingHandX < -0.5) {
+						// Left Icon
+					}
+				}
 				
+				
+				
+				
+				//These below stuffs are for testing only,
 				if(newPaintingHandX < 0.01 && newPaintingHandY < 0.01){
 					Log.e("TAG", "-------x,y");
 				}
 				if (newX-x > 5 && newY-y > 5 && newY-y < 10000 ) {
 					Log.e("TAG", "-----------inside <<<<<<<<<<");
-					mDocumentMenu.setVisibility(View.VISIBLE);
-					mDocumentMenu.setAlpha(127);
+//					mDocumentMenu.setVisibility(View.VISIBLE);
+//					mDocumentMenu.setAlpha(127);
 				}
 				newX = x;
 				newY = y;
@@ -356,12 +388,68 @@ public class SkeletonJointsSample extends Activity {
 					try {
 						isFirstLaunch = false;
 						Thread.sleep(1000);
+						//mDocumentMenu.setImageResource(R.drawable.brushes);
+						getViewAsVisible();
+						//getSubOptionsDrawables();
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
 			}
+		}
+		
+		private void getViewAsVisible() {
+			mDocumentMenu.setVisibility(View.VISIBLE);
+			mDocumentMenu.setAlpha(127);
+			
+			brushes.setVisibility(View.VISIBLE);
+			brushes.setAlpha(127);
+			
+			fileOption.setVisibility(View.VISIBLE);
+			fileOption.setAlpha(127);
+			
+			selectColors.setVisibility(View.VISIBLE);
+			selectColors.setAlpha(127);
+
+		}
+		
+		private void getViewAsGone() {
+			mDocumentMenu.setVisibility(View.GONE);
+			brushes.setVisibility(View.GONE);
+			fileOption.setVisibility(View.GONE);
+			selectColors.setVisibility(View.GONE);
+
+		}
+		
+		private void getSubMenuDrawables() {
+			mDocumentMenu.setImageResource(R.drawable.save);
+			brushes.setImageResource(R.drawable.open);
+			fileOption.setImageResource(R.drawable.back);
+			selectColors.setImageResource(R.drawable.delete);
+		}
+		
+		private void getSubOptionsDrawables() {
+			mDocumentMenu.setImageResource(R.drawable.twitter);
+			brushes.setImageResource(R.drawable.camera);
+			fileOption.setImageResource(R.drawable.back);
+			//selectColors.setImageResource(R.drawable.p);
+		}
+		
+		private void getSubBrushesDrawables() {
+			//TODO:drawables
+			mDocumentMenu.setImageResource(R.drawable.twitter);
+			brushes.setImageResource(R.drawable.camera);
+			fileOption.setImageResource(R.drawable.back);
+			//selectColors.setImageResource(R.drawable.p);
+		}
+		
+		private void getSubColorsDrawables() {
+			//TODO: get actual drawables
+			mDocumentMenu.setImageResource(R.drawable.twitter);
+			brushes.setImageResource(R.drawable.camera);
+			fileOption.setImageResource(R.drawable.back);
+			//selectColors.setImageResource(R.drawable.p);
 		}
 
 		private String createWarningText(List<WarningType> warningsList) { 

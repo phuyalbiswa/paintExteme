@@ -101,7 +101,7 @@ android:layout_above="@+id/select_colors" -->
         />
     
     <ImageView
-        android:id="@+id/file_option_save"
+        android:id="@+id/file_option"
         android:layout_width="100dp"
         android:layout_height="70dp"
         android:src="@drawable/save"
