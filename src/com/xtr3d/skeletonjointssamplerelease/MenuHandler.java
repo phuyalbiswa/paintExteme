@@ -24,6 +24,8 @@ public class MenuHandler {
 	
 	public MenuHandler()
 	{
+		currentMenu = Menus.NONE;
+		
 		menuTop = R.id.top;
 		menuLeft = R.id.left;
 		menuRight = R.id.right;
@@ -128,10 +130,10 @@ public class MenuHandler {
 			images.add(R.drawable.document);
 			break;
 		case BRUSHES:
-			images.add(R.drawable.document);
-			images.add(R.drawable.document);
-			images.add(R.drawable.document);
-			images.add(R.drawable.document);
+			images.add(R.drawable.open);
+			images.add(R.drawable.open);
+			images.add(R.drawable.open);
+			images.add(R.drawable.open);
 			break;
 		}
 		return images;

@@ -15,7 +15,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
         android:src="@drawable/color"
-        android:visibility="invisible" />
+        android:visibility="visible" />
     
     <ImageView
         android:id="@+id/bottom"
@@ -40,7 +40,7 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:src="@drawable/brushes"
-            android:visibility="invisible" />
+            android:visibility="visible" />
 
         <ImageView
             android:id="@+id/right"
@@ -49,7 +49,7 @@
             android:layout_alignParentRight="true"
             android:layout_alignTop="@+id/left"
             android:src="@drawable/brushes"
-            android:visibility="invisible" />
+            android:visibility="visible" />
 
     </RelativeLayout>
 
