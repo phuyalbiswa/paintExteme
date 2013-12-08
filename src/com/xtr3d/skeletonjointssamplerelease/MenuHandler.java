@@ -149,10 +149,10 @@ public class MenuHandler {
 			images.add(R.drawable.delete);
 			break;
 		case COLOR:
-			images.add(R.drawable.document);
-			images.add(R.drawable.document);
-			images.add(R.drawable.document);
-			images.add(R.drawable.document);
+			images.add(R.drawable.blue_paint);
+			images.add(R.drawable.green_paint);
+			images.add(R.drawable.red_paint);
+			images.add(R.drawable.back);
 			break;
 		case BRUSHES:
 			images.add(R.drawable.open);
