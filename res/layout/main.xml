@@ -4,31 +4,45 @@
     android:layout_width="match_parent"
     android:layout_height="fill_parent"
     android:gravity="top"
+    android:background="#008000"
     android:orientation="horizontal" >
 
     <Button
         android:id="@+id/resetButton"
         style="?android:attr/buttonStyleSmall"
-        android:layout_width="100dp"
-        android:layout_height="54dp"
+        android:layout_width="1dp"
+        android:layout_height="1dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:text="@string/reset_button_text"
         android:textSize="25sp" />
+    
+      <ImageView
+        android:id="@+id/menu"
+        android:layout_width="100dp"
+        android:layout_height="70dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/menu"
+        android:visibility="visible"
+        />
+<!--         android:layout_below="@+id/resetButton" 
+android:layout_above="@+id/select_colors" -->
 
     <ImageView
         android:id="@+id/calibIcon"
-        android:layout_width="250px"
-        android:layout_height="250px"
+        android:layout_width="1px"
+        android:layout_height="1px"
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@id/resetButton"
         android:src="@drawable/calibration_icon"
-        android:visibility="invisible" />
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/trackingText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="1dp"
+        android:layout_height="1dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:textColor="#ff00ff00"
@@ -45,20 +59,57 @@
 
     <TextView
         android:id="@+id/FPSText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="1dp"
+        android:layout_height="1dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:textColor="#ff00ff00"
         android:textSize="20sp" />
+    
+    <ImageView
+        android:id="@+id/select_colors"
+        android:layout_width="wrap_content"
+        android:layout_height="70dp"
+        android:layout_toLeftOf="@+id/menu"
+        android:layout_below="@+id/menu"
+        android:layout_marginTop="10dp"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/color"
+        />
 
     <TextView
         android:id="@+id/warningsView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="1dp"
+        android:layout_height="1dp"
         android:layout_alignParentRight="true"
         android:gravity="right"
+        android:background="#ffffff"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="#ff00ff00" />
+    
+    
+    <ImageView
+        android:id="@+id/brushes"
+        android:layout_width="70dp"
+        
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/menu"
+        android:layout_below="@+id/menu"
+        android:src="@drawable/brushes"
+        />
+    
+    <ImageView
+        android:id="@+id/file_option_save"
+        android:layout_width="100dp"
+        android:layout_height="70dp"
+        android:src="@drawable/save"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp"
+       
+        />
+    <!--  android:layout_below="@+id/brushes"
+        android:layout_toRightOf="@+id/select_colors"
+        android:layout_toLeftOf="@+id/brushes" -->
 
 </RelativeLayout>

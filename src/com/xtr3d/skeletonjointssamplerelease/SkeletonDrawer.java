@@ -4,6 +4,7 @@ import java.util.List;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.util.Log;
 
 import com.xtr3d.extrememotion.api.Joint;
 
@@ -12,7 +13,7 @@ public class SkeletonDrawer {
 	private int mHeight;
 	private int mWidth;
 	private Paint mPaint;
-	private int mNumOfCoordinates = 32;
+	private int mNumOfCoordinates = 134;
 	private float mPoints[] = new float[mNumOfCoordinates];
 	
 	//0-3: left hand to left elbow
@@ -40,6 +41,8 @@ public class SkeletonDrawer {
 		{
 			float x = (joint.getPoint().getImgCoordNormHorizontal() * (float)mWidth);
 			float y = (joint.getPoint().getImgCoordNormVertical() * (float)mHeight);
+			float xx = (joint.getPoint().getX());
+			float yy = (joint.getPoint().getY());
 			
 			int r = 0, g = 0, b = 0;					
 			// select a high-contrast color scheme for the currently available joints
@@ -104,6 +107,8 @@ public class SkeletonDrawer {
 				b = 55;
 				mPoints[8] = x;
 				mPoints[9] = y;
+				mPoints[132] = xx;
+				mPoints[133] = yy;
 				break;
 			case ShoulderCenter:
 				r = 100;
@@ -159,6 +164,14 @@ public class SkeletonDrawer {
 			mPaint.setStrokeCap(Paint.Cap.ROUND);
 			mPaint.setStrokeWidth(10);
 			canvas.drawLines(mPoints, 0, mNumOfCoordinates, mPaint);
-		}	
+		}
+		
+//		float newPaintingHandX = mPoints[8];
+//		float newPaintingHandY = mPoints[9];
+//		Log.e("TAG", "X: "+newPaintingHandX +" y: "+newPaintingHandY + "newHipCenterX: "+newHipCenterX + " newHipCenterX: " +newHipCenterX);
+		float newPaintingHandX = mPoints[132];
+		float newPaintingHandY = mPoints[133];
+		//Log.e("TAG", "X: "+newPaintingHandX +" y: "+newPaintingHandY + "newHipCenterX: "+newHipCenterX + " newHipCenterX: " +newHipCenterX);
+		
 	}
 }

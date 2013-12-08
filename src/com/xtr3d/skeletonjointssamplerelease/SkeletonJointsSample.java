@@ -13,6 +13,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -59,6 +60,7 @@ public class SkeletonJointsSample extends Activity {
 
 	/** Used to contain the reset button */
 	private Button mResetButton;
+	private ImageView mResetButton2;
 
 	/** Used to contain the above UI elements */
 
@@ -78,9 +80,15 @@ public class SkeletonJointsSample extends Activity {
 	//This approach should be used only if your application does not use the Canvas, and
 	//it is here, only as a reference for other applications which will not draw the skeleton, and therefore no syncing is needed. 
 	private final boolean DRAW_BITMAP_EXPLICITLY = true;
+	
+	
+	private final int WIDTH = 640;
+	private final int HEIGHT = 480;
+	private int mNumOfCoordinates = 134;
+	private float mPoints[] = new float[mNumOfCoordinates];
 
 	/** View where actual bitmap is drawn **/
-	private DrawHandler mDrawHandler;
+	//private DrawHandler mDrawHandler;
 
 	/** Call on every application resume **/
 	@Override
@@ -95,6 +103,7 @@ public class SkeletonJointsSample extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 		mResetButton = (Button) findViewById(R.id.resetButton);
+		mResetButton2 = (ImageView) findViewById(R.id.brushes);
 		mCalibIcon = (ImageView) findViewById(R.id.calibIcon);
 		mFPSTextView = (TextView) findViewById(R.id.FPSText);
 		mTrackingStatusTextView = (TextView) findViewById(R.id.trackingText);
@@ -114,14 +123,20 @@ public class SkeletonJointsSample extends Activity {
 			}
 		});
 		
-		mDrawHandler = new DrawHandler(this);
-		mDrawHandler.setEmUtils(emUtils);
+		mResetButton2.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				//emUtils.reset();
+				//mCalibIcon.setVisibility(View.INVISIBLE);
+			}
+		});
+		//mDrawHandler = new DrawHandler(this);
+		//mDrawHandler.setEmUtils(emUtils);
 		
 		mPreviewView= emUtils.onCreate(this,  new SkeletonListenerImpl());
 		mCameraLayout.addView(mPreviewView);
 		mDemoView = new DemoView(this);
 		mCameraLayout.addView(mDemoView,android.widget.RelativeLayout.LayoutParams.MATCH_PARENT);
-		mCameraLayout.addView(mDrawHandler.drawView, android.widget.RelativeLayout.LayoutParams.MATCH_PARENT);
+		//mCameraLayout.addView(mDrawHandler.drawView, android.widget.RelativeLayout.LayoutParams.MATCH_PARENT);
 		mCalibIcon.bringToFront();
 	}
 
@@ -143,12 +158,16 @@ public class SkeletonJointsSample extends Activity {
 		private final long ENGINE_RESET_TIME_OUT = 4000;
 		private Handler mHandler = new Handler();
 		private FrameRateCalculator frameRateCalc = new FrameRateCalculator();
+		private boolean isFirstLaunch = true;
 		private Runnable mResetEngineTaskOnUserExit = new Runnable() {
 			@Override
 			public void run() {
 				emUtils.reset();
 			}
 		};
+		private float newX = 10000000;
+		private float newY = 10000000;
+
 
 		@Override
 		public void onNewFrameReady(final FrameInfo newFrameInfo) {
@@ -195,8 +214,151 @@ public class SkeletonJointsSample extends Activity {
 			else if (mLastSkeletonState== StateType.NOT_TRACKED && state == StateType.TRACKED){
 				mHandler.removeCallbacks(mResetEngineTaskOnUserExit);
 			}
+			else if (state == StateType.TRACKED) {
+				//mResetButton2.setVisibility(View.VISIBLE);
+				
+				FrameInfo frameInfo = emUtils.getLatestFrameInfo();
+				if (frameInfo == null)
+					return;
+				List<Joint> joints = frameInfo.getSkeleton().getJoints();
+				if (null != joints && !joints.isEmpty()) {
+					enableJestureChecker(joints);
+					
+				}
+			}
 			
 			mLastSkeletonState = state;
+		}
+		
+		public void enableJestureChecker(List<Joint> mJoints) {
+			for (Joint joint : mJoints) 
+			{
+//				float x = (joint.getPoint().getImgCoordNormHorizontal() * (float)mWidth);
+//				float y = (joint.getPoint().getImgCoordNormVertical() * (float)mHeight);
+				float x = (joint.getPoint().getImgCoordNormHorizontal() * (float)WIDTH);
+				float y = (joint.getPoint().getImgCoordNormVertical() * (float)HEIGHT);
+				float xx = (joint.getPoint().getX());
+				float yy = (joint.getPoint().getY());
+				
+				int r = 0, g = 0, b = 0;					
+				// select a high-contrast color scheme for the currently available joints
+				switch (joint.getJointType()) {
+				case HandLeft:
+					r = 118;
+					g = 42;
+					b = 131;
+					//mPoints[0] = x;
+					//mPoints[1] = y;
+					break;
+				case ElbowLeft:
+					r = 175;
+					g = 141;
+					b = 195;
+					//mPoints[2] = x;
+					//mPoints[3] = y;
+					
+//					mPoints[4] = x;
+//					mPoints[5] = y;
+					break;
+				case ShoulderLeft:
+					r = 0;
+					g = 0;
+					b = 255;
+					mPoints[6] = x;
+					mPoints[7] = y;
+					mPoints[132] = xx;
+					mPoints[133] = yy;
+//					
+//					mPoints[16] = x;
+//					mPoints[17] = y;
+					break;
+				case Head:
+					r = 255;
+					g = 0;
+					b = 0;
+//					mPoints[24] = x;
+//					mPoints[25] = y;
+					break;
+				case ShoulderRight:
+					r = 255;
+					g = 255;
+					b = 0;
+//					mPoints[14] = x;
+//					mPoints[15] = y;
+//					
+//					mPoints[20] = x;
+//					mPoints[21] = y;
+					break;
+				case ElbowRight:
+					r = 127;
+					g = 191;
+					b = 123;
+//					mPoints[10] = x;
+//					mPoints[11] = y;
+//					
+//					mPoints[12] = x;
+//					mPoints[13] = y;
+					break;
+				case HandRight:
+					r = 27;
+					g = 120;
+					b = 55;
+//					mPoints[8] = x;
+//					mPoints[9] = y;
+					break;
+				case ShoulderCenter:
+					r = 100;
+					g = 100;
+					b = 100;
+//					mPoints[18] = x;
+//					mPoints[19] = y;
+//					
+//					mPoints[22] = x;
+//					mPoints[23] = y;
+//					
+//					mPoints[26] = x;
+//					mPoints[27] = y;
+//					
+//					mPoints[28] = x;
+//					mPoints[29] = y;
+//					
+//					shoulderCenterX = x;
+//					shoulderCenterY = y;
+					break;
+				case HipCenter:							
+//					mPoints[30] = x;
+//					mPoints[31] = y;
+//					
+//					hipCenterX = x;
+//					hipCenterY = y;
+					continue; //don't draw this joint, it is recalculated later on and placed farther up in the skeleton				
+				default:
+					break;
+				}
+//				mPaint.setARGB(255, r, g, b);
+//				canvas.drawCircle(x, y, 15, mPaint);
+				float newPaintingHandX = mPoints[132];
+				float newPaintingHandY = mPoints[133];
+				Log.e("TAG", "X: "+newPaintingHandX +" y: "+newPaintingHandY //+ "newHipCenterX: "+newHipCenterX + " newHipCenterX: " +newHipCenterX
+						);
+				
+				if(newPaintingHandX < 0.01 && newPaintingHandY < 0.01){
+					Log.e("TAG", "-------x,y");
+				}
+				if (newX-x > 5 && newY-y > 5 && newY-y < 10000 ) {
+					Log.e("TAG", "-----------inside <<<<<<<<<<");
+					mResetButton2.setVisibility(View.VISIBLE);
+					mResetButton2.setAlpha(127);
+				}
+				newX = x;
+				newY = y;
+				try {
+					Thread.sleep(100);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 		}
 
 		private String createWarningText(List<WarningType> warningsList) { 
