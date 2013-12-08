@@ -1,0 +1,8 @@
+.metadata
+.settings
+apk/
+bin/
+gen/
+libs/
+.classpath
+.project
