@@ -65,6 +65,7 @@ public class MenuHandler {
 			if(handRightY <= 50) //top
 			{
 				// TODO Save
+				PaintExtreme.ViewHandler.mCanvasView.saveImage();
 			}
 			else if(handRightX <= 50) //left
 			{

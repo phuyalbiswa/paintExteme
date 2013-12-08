@@ -28,8 +28,8 @@
 
     <RelativeLayout
         android:id="@+id/cameraLayout"
-        android:layout_width="640px"
-        android:layout_height="480px"
+        android:layout_width="1280px"
+        android:layout_height="960px"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
         android:layout_below="@+id/top" >
