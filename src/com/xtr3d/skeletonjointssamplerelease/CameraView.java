@@ -7,6 +7,7 @@ import org.opencv.core.Mat;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Rect;
 import android.view.View;
 
 public class CameraView extends View {
@@ -35,7 +36,11 @@ public class CameraView extends View {
 			}
 			matRgb.put(0, 0, frameInfo.getRgbImage());
 			Utils.matToBitmap(matRgb, mRgb);
-			canvas.drawBitmap(mRgb, 0, 0, null);
+			
+			Rect src = new Rect(0, 0, mRgb.getWidth() - 1, mRgb.getHeight() - 1);
+			Rect dest = new Rect(0, 0, 1280 - 1, 960 - 1);
+			
+			canvas.drawBitmap(mRgb, src, dest, null);
 		}
 	}
 }

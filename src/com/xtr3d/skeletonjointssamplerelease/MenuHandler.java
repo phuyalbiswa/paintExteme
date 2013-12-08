@@ -61,23 +61,45 @@ public class MenuHandler {
 				changeMenu(Menus.OPTIONS);
 			}
 			break;
-		case COLOR:
+		case DOCUMENT:
 			if(handRightY <= 50) //top
 			{
-				changeMenu(Menus.NONE);
+				// TODO Save
 			}
 			else if(handRightX <= 50) //left
 			{
-				changeMenu(Menus.NONE);
+				// TODO Delete
 			}
 			else if(handRightX >= 640 - 50)
 			{
-				changeMenu(Menus.NONE);
+				// TODO Open
 			}
 			else if(handRightY >= 480 - 50)
 			{
-				changeMenu(Menus.NONE);
+				// TODO Back
 			}
+			break;
+		case OPTIONS:
+			break;
+		case COLOR:
+			if(handRightY <= 50) //top
+			{
+				// TODO Red
+			}
+			else if(handRightX <= 50) //left
+			{
+				// TODO Green
+			}
+			else if(handRightX >= 640 - 50)
+			{
+				// TODO Blue
+			}
+			else if(handRightY >= 480 - 50)
+			{
+				// TODO Purple
+			}
+			break;
+		case BRUSHES:
 			break;
 		default:
 			break;
