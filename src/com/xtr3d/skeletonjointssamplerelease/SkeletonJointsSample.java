@@ -60,7 +60,7 @@ public class SkeletonJointsSample extends Activity {
 
 	/** Used to contain the reset button */
 	private Button mResetButton;
-	private ImageView mResetButton2;
+	private ImageView mDocumentMenu;
 
 	/** Used to contain the above UI elements */
 
@@ -103,7 +103,7 @@ public class SkeletonJointsSample extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 		mResetButton = (Button) findViewById(R.id.resetButton);
-		mResetButton2 = (ImageView) findViewById(R.id.brushes);
+		mDocumentMenu = (ImageView) findViewById(R.id.menu);
 		mCalibIcon = (ImageView) findViewById(R.id.calibIcon);
 		mFPSTextView = (TextView) findViewById(R.id.FPSText);
 		mTrackingStatusTextView = (TextView) findViewById(R.id.trackingText);
@@ -123,7 +123,7 @@ public class SkeletonJointsSample extends Activity {
 			}
 		});
 		
-		mResetButton2.setOnClickListener(new View.OnClickListener() {
+		mDocumentMenu.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				//emUtils.reset();
 				//mCalibIcon.setVisibility(View.INVISIBLE);
@@ -347,16 +347,19 @@ public class SkeletonJointsSample extends Activity {
 				}
 				if (newX-x > 5 && newY-y > 5 && newY-y < 10000 ) {
 					Log.e("TAG", "-----------inside <<<<<<<<<<");
-					mResetButton2.setVisibility(View.VISIBLE);
-					mResetButton2.setAlpha(127);
+					mDocumentMenu.setVisibility(View.VISIBLE);
+					mDocumentMenu.setAlpha(127);
 				}
 				newX = x;
 				newY = y;
-				try {
-					Thread.sleep(100);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+				if (isFirstLaunch) {
+					try {
+						isFirstLaunch = false;
+						Thread.sleep(1000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 			}
 		}
