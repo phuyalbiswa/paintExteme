@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.xtr3d.extrememotion.api.Skeleton.StateType;
 import com.xtr3d.skeletonjointssamplerelease.ExtremeMotionUtils.NewFrameReadyListener;
@@ -26,6 +27,9 @@ public class PaintExtreme extends Activity {
 	private final ExtremeMotionUtils emUtils = new ExtremeMotionUtils();
 
 	private StateType mLastSkeletonState = StateType.INITIALIZING;
+	
+	// Test
+	public static TextView mDebugText;
 
 	@Override
 	protected void onResume() {
@@ -36,6 +40,9 @@ public class PaintExtreme extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		mDebugText = (TextView) findViewById(R.id.debugText);
+		
 		setContentView(R.layout.main);
 
 		mCameraLayout = (RelativeLayout) findViewById(R.id.cameraLayout);

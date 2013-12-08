@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 
 import com.xtr3d.extrememotion.api.Joint;
+import com.xtr3d.skeletonjointssamplerelease.PaintExtreme.ViewHandler;
 
 public class SkeletonDrawer {
 	
@@ -56,7 +57,8 @@ public class SkeletonDrawer {
 		canvas.drawCircle(handRightX, handRightY, 15, mPaint);
 		
 		// Test
-		PaintExtreme.ViewHandler.mCanvasView.drawCircle(handLeftX, handLeftY, 25, Color.argb((int)(handLeftZ * 255), 0, 0, 255));
+		PaintExtreme.mDebugText.setText(Float.toString(handLeftZ));
+		PaintExtreme.ViewHandler.mCanvasView.drawCircle(handLeftX, handLeftY, 25, Color.argb((int)(handLeftZ * 255), 255, 255, 0));
 		PaintExtreme.ViewHandler.mCanvasView.drawCircle(handRightX, handRightY, 25, Color.argb((int)(handRightZ * 255), 255, 0, 0));
 	}
 }
