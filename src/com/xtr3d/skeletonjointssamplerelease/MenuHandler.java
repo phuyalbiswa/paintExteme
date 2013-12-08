@@ -143,10 +143,10 @@ public class MenuHandler {
 			images.add(R.drawable.open);
 			break;
 		case OPTIONS:
-			images.add(R.drawable.delete);
-			images.add(R.drawable.delete);
-			images.add(R.drawable.delete);
-			images.add(R.drawable.delete);
+			images.add(R.drawable.twitter);
+			images.add(R.drawable.camera);
+			images.add(R.drawable.photo);
+			images.add(R.drawable.back);
 			break;
 		case COLOR:
 			images.add(R.drawable.blue_paint);
@@ -155,10 +155,10 @@ public class MenuHandler {
 			images.add(R.drawable.back);
 			break;
 		case BRUSHES:
-			images.add(R.drawable.open);
-			images.add(R.drawable.open);
-			images.add(R.drawable.open);
-			images.add(R.drawable.open);
+			images.add(R.drawable.brushes);
+			images.add(R.drawable.brushes);
+			images.add(R.drawable.brushes);
+			images.add(R.drawable.brushes);
 			break;
 		}
 		return images;
