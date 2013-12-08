@@ -50,17 +50,6 @@ public class ImageHandler {
 		   e.printStackTrace();
 		}
 		
-		/*
-		String fileURL = Media.insertImage(applicationContext.getContentResolver(), bitmap,
-				"KidsPaint", "Picture");
-
-		if (fileURL != null) {
-			  Uri uri = Uri.parse(fileURL);
-			  applicationContext.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
-					  uri));
-		}
-		*/
-		
 		Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
 	    Uri contentUri = Uri.fromFile(f);
 	    mediaScanIntent.setData(contentUri);
