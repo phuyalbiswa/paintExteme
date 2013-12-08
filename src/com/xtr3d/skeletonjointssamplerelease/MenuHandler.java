@@ -3,6 +3,8 @@ package com.xtr3d.skeletonjointssamplerelease;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.graphics.Color;
+
 
 public class MenuHandler {
 	
@@ -84,19 +86,19 @@ public class MenuHandler {
 		case COLOR:
 			if(handRightY <= 50) //top
 			{
-				// TODO Red
+				SkeletonDrawer.brushColor = Color.RED;
 			}
 			else if(handRightX <= 50) //left
 			{
-				// TODO Green
+				SkeletonDrawer.brushColor = Color.GREEN;
 			}
 			else if(handRightX >= 640 - 50)
 			{
-				// TODO Blue
+				SkeletonDrawer.brushColor = Color.BLUE;
 			}
 			else if(handRightY >= 480 - 50)
 			{
-				// TODO Purple
+				SkeletonDrawer.brushColor = Color.YELLOW;
 			}
 			break;
 		case BRUSHES:

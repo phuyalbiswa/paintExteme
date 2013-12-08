@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.view.View;
 
 public class CanvasView extends View {
@@ -41,6 +42,10 @@ public class CanvasView extends View {
 
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
-		canvas.drawBitmap(mBitmap, 0, 0, mBitmapPaint);
+		
+		Rect src = new Rect(0, 0, mBitmap.getWidth() - 1, mBitmap.getHeight() - 1);
+		Rect dest = new Rect(0, 0, 1280 - 1, 960 - 1);
+		
+		canvas.drawBitmap(mBitmap, src, dest, mBitmapPaint);
 	}
 }
