@@ -73,6 +73,6 @@ public class DrawHandler {
 	}
 
 	private void drawCircle(float x, float y, int radius, Canvas c) {
-		c.drawCircle(x, y, 15, mPaint);
+		c.drawCircle(x, y, radius, mPaint);
 	}
 }
