@@ -3,6 +3,7 @@ package com.xtr3d.skeletonjointssamplerelease;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.view.View;
 
@@ -33,6 +34,7 @@ public class CanvasView extends View {
 	
 	public void drawCircle(float x, float y, int radius, int color)
 	{
+		mCanvas.drawColor(Color.TRANSPARENT);
 		mCirclePaint.setColor(color);
 		mCanvas.drawCircle(x, y, radius, mCirclePaint);
 	}
