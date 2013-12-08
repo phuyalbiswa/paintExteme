@@ -89,6 +89,9 @@ public class PaintExtreme extends Activity {
 		mCameraLayout.addView(ViewHandler.mCanvasView,
 				android.widget.RelativeLayout.LayoutParams.MATCH_PARENT);
 		
+		findViewById(R.id.top).bringToFront();
+		findViewById(R.id.bottom).bringToFront();
+		
 		mMenuHandler = new MenuHandler();
 	}
 
