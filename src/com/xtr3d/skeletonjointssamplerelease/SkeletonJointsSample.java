@@ -20,11 +20,10 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.xtr3d.skeletonjointssamplerelease.R;
-import com.xtr3d.skeletonjointssamplerelease.ExtremeMotionUtils.NewFrameReadyListener;
 import com.xtr3d.extrememotion.api.Joint;
 import com.xtr3d.extrememotion.api.Skeleton.StateType;
 import com.xtr3d.extrememotion.api.WarningType;
+import com.xtr3d.skeletonjointssamplerelease.ExtremeMotionUtils.NewFrameReadyListener;
 
 /**
  * A sample application to demonstrate XTR3D Android Skeleton API
@@ -80,6 +79,9 @@ public class SkeletonJointsSample extends Activity {
 	//it is here, only as a reference for other applications which will not draw the skeleton, and therefore no syncing is needed. 
 	private final boolean DRAW_BITMAP_EXPLICITLY = true;
 
+	/** View where actual bitmap is drawn **/
+	private DrawHandler mDrawHandler;
+
 	/** Call on every application resume **/
 	@Override
 	protected void onResume() {
@@ -112,10 +114,14 @@ public class SkeletonJointsSample extends Activity {
 			}
 		});
 		
+		mDrawHandler = new DrawHandler(this);
+		mDrawHandler.setEmUtils(emUtils);
+		
 		mPreviewView= emUtils.onCreate(this,  new SkeletonListenerImpl());
 		mCameraLayout.addView(mPreviewView);
 		mDemoView = new DemoView(this);
 		mCameraLayout.addView(mDemoView,android.widget.RelativeLayout.LayoutParams.MATCH_PARENT);
+		mCameraLayout.addView(mDrawHandler.drawView, android.widget.RelativeLayout.LayoutParams.MATCH_PARENT);
 		mCalibIcon.bringToFront();
 	}
 
