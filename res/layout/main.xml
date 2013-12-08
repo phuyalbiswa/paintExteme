@@ -26,14 +26,16 @@
         android:layout_marginBottom="10dp"
         android:src="@drawable/save" />
 
-    <RelativeLayout
+    <FrameLayout
         android:id="@+id/cameraLayout"
-        android:layout_width="640px"
-        android:layout_height="480px"
+        android:layout_width="1280px"
+        android:layout_height="960px"
         android:layout_alignParentLeft="true"
-        android:layout_centerVertical="true"
-        android:layout_below="@+id/top" >
-    </RelativeLayout>
+        android:layout_below="@+id/top"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true" >
+
+    </FrameLayout>
 
     <ImageView
         android:id="@+id/left"

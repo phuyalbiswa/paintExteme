@@ -230,7 +230,7 @@ public class PaintExtreme extends Activity {
 			}
 			
 			// Check standard error
-			if(varLeftX <= 100 && varLeftY <= 100 && varRightX <= 100 && varRightY <= 100)
+			if(varLeftX <= 1000 && varLeftY <= 1000 && varRightX <= 1000 && varRightY <= 1000)
 			{
 				mMenuHandler.processActions(handLeftX, handLeftY, handRightX, handRightY);
 			}
