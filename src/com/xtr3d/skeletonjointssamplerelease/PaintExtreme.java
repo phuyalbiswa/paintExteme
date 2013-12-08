@@ -188,10 +188,12 @@ public class PaintExtreme extends Activity {
 			handRightOldX.add(handRightX);
 			handRightOldY.add(handRightY);
 			
-			if(handLeftOldX.size() > 5){handLeftOldX.poll();};
-			if(handLeftOldY.size() > 5){handLeftOldY.poll();};
-			if(handRightOldX.size() > 5){handRightOldX.poll();};
-			if(handRightOldY.size() > 5){handRightOldY.poll();};
+			final float SAMPLES = 20;
+			
+			if(handLeftOldX.size() > SAMPLES){handLeftOldX.poll();};
+			if(handLeftOldY.size() > SAMPLES){handLeftOldY.poll();};
+			if(handRightOldX.size() > SAMPLES){handRightOldX.poll();};
+			if(handRightOldY.size() > SAMPLES){handRightOldY.poll();};
 			
 			// Get average motion of hands
 			float avgLeftX = 0, avgLeftY = 0, avgRightX = 0, avgRightY = 0;
@@ -207,13 +209,28 @@ public class PaintExtreme extends Activity {
 			for (float rightY : handRightOldY) {
 				avgRightY += rightY;
 			}
-			avgLeftX /= 5;
-			avgLeftY /= 5;
-			avgRightX /= 5;
-			avgRightY /= 5;
+			avgLeftX /= SAMPLES;
+			avgLeftY /= SAMPLES;
+			avgRightX /= SAMPLES;
+			avgRightY /= SAMPLES;
+			
+			float varLeftX = 0, varLeftY = 0, varRightX = 0, varRightY = 0;
+			// Get standard error
+			for (float leftX : handLeftOldX) {
+				varLeftX += Math.abs(avgLeftX - leftX);
+			}
+			for (float leftY : handLeftOldY) {
+				varLeftY += Math.abs(avgLeftY - leftY);
+			}
+			for (float rightX : handRightOldX) {
+				varRightX += Math.abs(avgRightX - rightX);
+			}
+			for (float rightY : handRightOldY) {
+				varRightY += Math.abs(avgRightY - rightY);
+			}
 			
 			// Check standard error
-			if(avgLeftX <= 20 && avgLeftY <= 20 && avgRightX <= 20 && avgRightY <= 20)
+			if(varLeftX <= 100 && varLeftY <= 100 && varRightX <= 100 && varRightY <= 100)
 			{
 				mMenuHandler.processActions(handLeftX, handLeftY, handRightX, handRightY);
 			}
