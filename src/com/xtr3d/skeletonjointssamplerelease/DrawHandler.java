@@ -42,7 +42,7 @@ public class DrawHandler {
 
 	private void drawHands(Canvas c) {
 		// Set paint color
-		mPaint.setARGB(255, 255, 127, 36);
+		mPaint.setARGB(255, 36, 127, 255);
 
 		List<Joint> joints = emUtils.getLatestFrameInfo().getSkeleton().getJoints();
 
