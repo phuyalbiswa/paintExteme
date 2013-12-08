@@ -26,7 +26,7 @@ public class CanvasView extends View {
 		mBitmapPaint = new Paint(Paint.DITHER_FLAG);
 		mCirclePaint = new Paint();
 		mCirclePaint.setAntiAlias(true);
-		mCirclePaint.setStyle(Paint.Style.STROKE);
+		mCirclePaint.setStyle(Paint.Style.FILL);
 		mCirclePaint.setStrokeJoin(Paint.Join.MITER);
 		mCirclePaint.setStrokeWidth(4f);
 	}

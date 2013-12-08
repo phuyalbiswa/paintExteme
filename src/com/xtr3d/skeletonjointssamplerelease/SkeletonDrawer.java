@@ -25,22 +25,27 @@ public class SkeletonDrawer {
 	public void drawHands(Canvas canvas, List<Joint> mJoints){
 		float handLeftX = 0;
 		float handLeftY = 0;
+		float handLeftZ = 0;
 		float handRightX = 0;
 		float handRightY = 0;
+		float handRightZ = 0;
 		for (Joint joint : mJoints) 
 		{
 			float x = (joint.getPoint().getImgCoordNormHorizontal() * (float)mWidth);
 			float y = (joint.getPoint().getImgCoordNormVertical() * (float)mHeight);
+			float z = (joint.getPoint().getZ());
 			
 			// select a high-contrast color scheme for the currently available joints
 			switch (joint.getJointType()) {
 			case HandLeft:
 				handLeftX = x;
 				handLeftY = y;
+				handLeftZ = z;
 				break;
 			case HandRight:
 				handRightX = x;
 				handRightY = y;
+				handRightZ = z;
 				break;
 			default:
 				break;
@@ -51,7 +56,7 @@ public class SkeletonDrawer {
 		canvas.drawCircle(handRightX, handRightY, 15, mPaint);
 		
 		// Test
-		PaintExtreme.ViewHandler.mCanvasView.drawCircle(handLeftX, handLeftY, 25, Color.BLUE);
-		PaintExtreme.ViewHandler.mCanvasView.drawCircle(handRightX, handRightY, 25, Color.RED);
+		PaintExtreme.ViewHandler.mCanvasView.drawCircle(handLeftX, handLeftY, 25, Color.argb((int)(handLeftZ * 255), 0, 0, 255));
+		PaintExtreme.ViewHandler.mCanvasView.drawCircle(handRightX, handRightY, 25, Color.argb((int)(handRightZ * 255), 255, 0, 0));
 	}
 }
